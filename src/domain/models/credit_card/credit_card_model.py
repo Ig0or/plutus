@@ -1,14 +1,11 @@
 # Third Party
-from pydantic import BaseModel
+from typing import TypedDict
 
 
-class CreditCardModel(BaseModel):
+class CreditCardModel(TypedDict):
+    id: str
     exp_date: str
     holder: str
     number: str
     cvv: str
     brand: str
-
-
-class CreditCardResponseModel(BaseModel):
-    result: CreditCardModel
