@@ -1,8 +1,8 @@
+# Standard
+from typing import NoReturn
+
 # Third Party
 from fastapi import FastAPI
-
-# Standard
-from typing_extensions import NoReturn
 
 # Local
 from src.routers.credit_card.credit_card_router import CreditCardRouter
@@ -17,8 +17,10 @@ class BaseRouter:
 
         cls.__app.include_router(router=credit_card_routers)
 
+        return
+
     @classmethod
-    def register_routers(cls):
+    def register_routers(cls) -> FastAPI:
         cls.__register_credit_card_routers()
 
         return cls.__app
