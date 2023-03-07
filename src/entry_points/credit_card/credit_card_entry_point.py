@@ -1,35 +1,70 @@
 # Standard
-from typing import Callable
+from http import HTTPStatus
+from typing import Callable, NoReturn
 
 # Third Party
-from http import HTTPStatus
 from fastapi import Response
 
 # Local
+from src.domain.dtos.abstract_response.abstract_response_dto import AbstractResponseDto
+from src.domain.dtos.response.response_dto import ResponseDto
 from src.domain.exceptions.exceptions import InvalidToken
-from src.domain.models.response.response_model import ResponseModel
 from src.services.token_validation.token_validation_token import TokenValidationService
 
 
 class CreditCardEntryPoint:
     @staticmethod
+    async def __process_callback(
+        callback: Callable, arguments: dict = None
+    ) -> AbstractResponseDto:
+        response = await callback(**arguments or dict())
+
+        return response
+
+    @staticmethod
+    def __validate_header_token(token: str) -> NoReturn:
+        valid_token = TokenValidationService.validate_token(token=token)
+
+        if not valid_token:
+            raise InvalidToken()
+
+        return
+
+    @staticmethod
     async def process_request(
         callback: Callable, header: str, body_parameters: dict = None
     ) -> Response:
-        response_model = None
+        response_dto = None
 
         try:
-            valid_token = TokenValidationService.validate_token(token=header)
+            CreditCardEntryPoint.__validate_header_token(token=header)
 
-            if not valid_token:
-                raise InvalidToken()
+            response = await CreditCardEntryPoint.__process_callback(
+                callback=callback, arguments=body_parameters
+            )
 
-            response_model = callback(**body_parameters)
+            response_dto = ResponseDto(
+                success=response.get("success"),
+                status_code=response.get("status_code"),
+                message=response.get("message"),
+                result=response.get("result"),
+            )
 
         except InvalidToken:
-            response_model = ResponseModel(
-                message="The x-token is invalid.", success=False
-            ).build_http_response(status_code=HTTPStatus.UNAUTHORIZED)
+            response_dto = ResponseDto(
+                success=False,
+                status_code=HTTPStatus.UNAUTHORIZED,
+                message="The x-token is invalid.",
+            )
+
+        except Exception as exception:
+            response_dto = ResponseDto(
+                success=False,
+                status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
+                message="An expected error occurred.",
+            )
 
         finally:
-            return response_model
+            http_response = response_dto.build_http_response()
+
+            return http_response
