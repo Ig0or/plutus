@@ -35,7 +35,9 @@ class ResponseDto:
         encoded_response_dict = self.__build_encoded_content()
 
         http_response = Response(
-            content=encoded_response_dict, status_code=self.__status_code
+            content=encoded_response_dict,
+            status_code=self.__status_code,
+            media_type="application/json",
         )
 
         return http_response
