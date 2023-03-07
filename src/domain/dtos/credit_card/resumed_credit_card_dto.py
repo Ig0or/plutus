@@ -1,7 +1,6 @@
 # Standard
-from typing_extensions import NotRequired, TypedDict
-
 from http import HTTPStatus
+from typing_extensions import NotRequired, TypedDict
 
 
 class ResumedCreditCardDto(TypedDict):
