@@ -27,7 +27,7 @@ class MongoDBInfrastructure:
 
     @classmethod
     def get_connection(cls) -> Collection:
-        if not cls.__connection:
+        if cls.__connection is None:
             cls.__connection = cls.__create_connection()
 
         return cls.__connection
