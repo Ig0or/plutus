@@ -1,7 +1,9 @@
 # Third Party
 from creditcard import CreditCard
 
+
 # Local
+from src.domain.dtos.credit_card.credit_card_dto import CreditCardDto
 from src.domain.dtos.credit_card.resumed_credit_card_dto import ResumedCreditCardDto
 from src.domain.models.credit_card.credit_card_model import CreditCardModel
 from src.domain.validators.credit_card.credit_card_validator import CreditCardValidator
@@ -54,6 +56,18 @@ class CreditCardExtension:
             models.append(model)
 
         return models
+
+    @staticmethod
+    def to_credit_card_dto(credit_card_model: CreditCardModel) -> CreditCardDto:
+        dto: CreditCardDto = {
+            "exp_date": credit_card_model["exp_date"],
+            "holder": credit_card_model["holder"],
+            "number": credit_card_model["number"],
+            "cvv": credit_card_model["cvv"],
+            "brand": credit_card_model["brand"],
+        }
+
+        return dto
 
     @staticmethod
     def to_new_credit_card_model(credit_card: CreditCardValidator) -> CreditCardModel:
