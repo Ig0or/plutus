@@ -97,12 +97,14 @@ class CreditCardValidator(BaseModel):
 
     @validator("number")
     def validate_number(cls, number: str) -> str:
-        credit_card = CreditCard(number=number)
+        number_without_space = number.strip().replace(" ", "")
+
+        credit_card = CreditCard(number=number_without_space)
 
         if not credit_card.is_valid():
             raise ValueError("The number is invalid.")
 
-        return number
+        return number_without_space
 
     @staticmethod
     def __check_cvv_null(cvv: str) -> NoReturn:
