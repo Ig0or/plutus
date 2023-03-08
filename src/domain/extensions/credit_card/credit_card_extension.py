@@ -1,3 +1,6 @@
+# Standard
+from calendar import monthrange
+
 # Third Party
 from creditcard import CreditCard
 
@@ -73,8 +76,12 @@ class CreditCardExtension:
     def to_new_credit_card_model(credit_card: CreditCardValidator) -> CreditCardModel:
         credit_card_instance = CreditCard(number=credit_card.number)
 
+        month, year = credit_card.exp_date.split(sep="/")
+        month_last_day = monthrange(year=int(year), month=int(month))[1]
+        formatted_date = f"{year}-{month}-{month_last_day}"
+
         model: CreditCardModel = {
-            "exp_date": credit_card.exp_date,
+            "exp_date": formatted_date,
             "holder": credit_card.holder,
             "number": credit_card.number,
             "cvv": credit_card.cvv,
