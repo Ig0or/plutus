@@ -1,6 +1,6 @@
 # Standard
 from datetime import date
-from typing import Optional, NoReturn
+from typing import NoReturn, Optional
 
 # Third Party
 from creditcard import CreditCard
@@ -12,6 +12,9 @@ class CreditCardValidator(BaseModel):
     holder: str
     number: str
     cvv: Optional[str]
+
+    class Config:
+        extra = "forbid"
 
     @staticmethod
     def __check_date_contains_slash(exp_date: str) -> tuple[str, str]:
