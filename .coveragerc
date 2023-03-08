@@ -1,0 +1,9 @@
+[run]
+omit =
+    src/domain/dtos*
+    src/domain/exceptions*
+    src/domain/models*
+    src/infrastructure/*
+    src/repositories/*
+    src/routers/*
+    */__init__.py
