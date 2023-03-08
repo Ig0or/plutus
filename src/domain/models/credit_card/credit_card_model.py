@@ -1,11 +1,10 @@
 # Third Party
-from typing import TypedDict
+from typing import TypedDict, Optional
 
 
 class CreditCardModel(TypedDict):
-    id: str
     exp_date: str
     holder: str
     number: str
-    cvv: str
+    cvv: Optional[str]
     brand: str
