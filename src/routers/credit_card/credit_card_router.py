@@ -4,6 +4,7 @@ from fastapi import APIRouter, Header, Response
 # Local
 from src.controllers.credit_card.credit_card_controller import CreditCardController
 from src.domain.dtos.abstract_response.abstract_response_dto import AbstractResponseDto
+from src.domain.dtos.credit_card.credit_card_dto import CreditCardResponseDto
 from src.domain.dtos.credit_card.resumed_credit_card_dto import (
     ResumedCreditCardResponseDto,
 )
@@ -32,6 +33,23 @@ class CreditCardRouter:
         return response
 
     @staticmethod
+    @__credit_card_router.get(
+        "/api/v1/credit-card/{credit_card_number}",
+        response_model=CreditCardResponseDto,
+    )
+    async def detail_credit_card(
+        credit_card_number: str,
+        x_token: str = Header(default=None, convert_underscores=True),
+    ) -> Response:
+        response = await CreditCardEntryPoint.process_request(
+            callback=CreditCardController.detail_credit_card,
+            header=x_token,
+            parameters=credit_card_number,
+        )
+
+        return response
+
+    @staticmethod
     @__credit_card_router.post(
         "/api/v1/credit-card", response_model=AbstractResponseDto
     )
@@ -42,7 +60,7 @@ class CreditCardRouter:
         response = await CreditCardEntryPoint.process_request(
             callback=CreditCardController.create_credit_card,
             header=x_token,
-            body_parameters=credit_card,
+            parameters=credit_card,
         )
 
         return response

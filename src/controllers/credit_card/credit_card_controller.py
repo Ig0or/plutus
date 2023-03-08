@@ -1,9 +1,9 @@
 # Standard
 from http import HTTPStatus
 
-
 # Local
 from src.domain.dtos.abstract_response.abstract_response_dto import AbstractResponseDto
+from src.domain.dtos.credit_card.credit_card_dto import CreditCardResponseDto
 from src.domain.dtos.credit_card.resumed_credit_card_dto import (
     ResumedCreditCardResponseDto,
 )
@@ -17,6 +17,20 @@ class CreditCardController:
         result = await CreditCardService.list_credit_cards()
 
         response: ResumedCreditCardResponseDto = {
+            "result": result,
+            "success": True,
+            "status_code": HTTPStatus.OK,
+        }
+
+        return response
+
+    @staticmethod
+    async def detail_credit_card(credit_card_number: str) -> CreditCardResponseDto:
+        result = await CreditCardService.detail_credit_card(
+            credit_card_number=credit_card_number
+        )
+
+        response: CreditCardResponseDto = {
             "result": result,
             "success": True,
             "status_code": HTTPStatus.OK,
