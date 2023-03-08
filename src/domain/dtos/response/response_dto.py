@@ -1,5 +1,4 @@
 # Standard
-from http import HTTPStatus
 import json
 
 # Third Party
@@ -10,7 +9,7 @@ class ResponseDto:
     def __init__(
         self,
         success: bool,
-        status_code: HTTPStatus,
+        status_code: int,
         message: str = None,
         result: dict = None,
     ):

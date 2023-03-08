@@ -1,5 +1,4 @@
 # Standard
-from http import HTTPStatus
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -12,4 +11,4 @@ class ResumedCreditCardResponseDto(TypedDict):
     result: list[ResumedCreditCardDto]
     message: NotRequired[str]
     success: bool
-    status_code: HTTPStatus
+    status_code: int
