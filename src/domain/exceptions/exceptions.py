@@ -4,3 +4,7 @@ class InvalidToken(Exception):
 
 class CreditCardAlreadyExists(Exception):
     pass
+
+
+class CreditCardNotExists(Exception):
+    pass

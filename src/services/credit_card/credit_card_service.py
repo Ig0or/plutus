@@ -2,8 +2,12 @@
 from typing import NoReturn
 
 # Local
+from src.domain.dtos.credit_card.credit_card_dto import CreditCardDto
 from src.domain.dtos.credit_card.resumed_credit_card_dto import ResumedCreditCardDto
-from src.domain.exceptions.exceptions import CreditCardAlreadyExists
+from src.domain.exceptions.exceptions import (
+    CreditCardAlreadyExists,
+    CreditCardNotExists,
+)
 from src.domain.extensions.credit_card.credit_card_extension import CreditCardExtension
 from src.domain.models.credit_card.credit_card_model import CreditCardModel
 from src.domain.validators.credit_card.credit_card_validator import CreditCardValidator
@@ -30,7 +34,7 @@ class CreditCardService:
         return decrypted_credit_cards
 
     @staticmethod
-    async def list_credit_cards() -> list[ResumedCreditCardDto]:
+    async def __get_all_credit_cards() -> list[CreditCardModel]:
         credit_cards_list = await CreditCardRepository.get_all_credit_cards()
 
         credit_cards_model = CreditCardExtension.to_array_credit_card_model(
@@ -41,11 +45,39 @@ class CreditCardService:
             credit_cards=credit_cards_model
         )
 
+        return decrypted_credit_cards
+
+    @staticmethod
+    async def list_credit_cards() -> list[ResumedCreditCardDto]:
+        all_credit_cards = await CreditCardService.__get_all_credit_cards()
+
         resumed_credit_cards_dto = CreditCardExtension.to_array_resumed_credit_card_dto(
-            credit_cards_model=decrypted_credit_cards
+            credit_cards_model=all_credit_cards
         )
 
         return resumed_credit_cards_dto
+
+    @staticmethod
+    async def detail_credit_card(credit_card_number: str) -> CreditCardDto:
+        all_credit_cards = await CreditCardService.__get_all_credit_cards()
+
+        credit_card = next(
+            (
+                credit_card
+                for credit_card in all_credit_cards
+                if credit_card["number"] == credit_card_number
+            ),
+            dict(),
+        )
+
+        if not credit_card:
+            raise CreditCardNotExists()
+
+        credit_card_dto = CreditCardExtension.to_credit_card_dto(
+            credit_card_model=credit_card
+        )
+
+        return credit_card_dto
 
     @staticmethod
     def __encrypt_credit_card_number(credit_card_number: str) -> str:
@@ -57,13 +89,9 @@ class CreditCardService:
 
     @staticmethod
     async def __verify_credit_card_already_exists(credit_card_number: str) -> NoReturn:
-        credit_cards = await CreditCardRepository.get_all_credit_cards()
+        all_credit_cards = await CreditCardService.__get_all_credit_cards()
 
-        decrypted_credit_cards = CreditCardService.__decrypt_credit_cards_number(
-            credit_cards=credit_cards
-        )
-
-        for credit_card in decrypted_credit_cards:
+        for credit_card in all_credit_cards:
             if credit_card["number"] == credit_card_number:
                 raise CreditCardAlreadyExists()
 
