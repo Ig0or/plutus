@@ -38,6 +38,6 @@ def test_deobfuscate_value_when_value_is_valid_then_return_decrypted_string(
     assert decrypted_value == valid_type_number_stub
 
 
-def test_deobfuscate_value_when_value_is_invalid_then_raise_():
+def test_deobfuscate_value_when_value_is_invalid_then_raise_attribute_error():
     with pytest.raises(AttributeError):
         ObfuscateDataService.deobfuscate_value(value=invalid_type_number_stub)
