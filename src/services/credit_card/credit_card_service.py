@@ -60,13 +60,15 @@ class CreditCardService(ICreditCardService):
 
     @staticmethod
     async def detail_credit_card(credit_card_number: str) -> CreditCardDto:
+        sanitized_credit_card_number = credit_card_number.strip().replace(" ", "")
+
         all_credit_cards = await CreditCardService.__get_all_credit_cards()
 
         credit_card = next(
             (
                 credit_card
                 for credit_card in all_credit_cards
-                if credit_card["number"] == credit_card_number
+                if credit_card["number"] == sanitized_credit_card_number
             ),
             dict(),
         )
