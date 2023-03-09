@@ -1,4 +1,5 @@
 # Third Party
+from decouple import config
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pyfiglet import print_figlet
@@ -26,5 +27,7 @@ def build_app() -> FastAPI:
 app = build_app()
 
 if __name__ == "__main__":
+    port = int(config("SERVER_PORT"))
+
     print_figlet(text="Plutus", colors="76;0;153")
-    uvicorn.run(app=app)
+    uvicorn.run(app=app, port=port)
