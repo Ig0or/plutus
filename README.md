@@ -66,10 +66,10 @@ MONGO_DATABASE= Nome do database.
 MONGO_COLLECTION= Nome da collection.
 
 -- TOKEN --
-VALID_TOKEN= Token que será usado para fazer a autenticação de acesso aos end-points.
+VALID_TOKEN= String que será usada para fazer a autenticação de acesso aos end-points.
 
 -- OBFUSCATE --
-FERNET_KEY= Chave que será utilizada para criptografar/descriptografar os dados - Excute o comando "python3 generate_fernet_key_script.py" para gerar uma nova chave.
+FERNET_KEY= Chave que será utilizada para criptografar/descriptografar os dados - Com a venv ativada execute o comando "python3 generate_fernet_key_script.py" para gerar uma nova chave.
 ```
 
 - Execute o comando ```python3 plutus.py``` para startar o servidor.
