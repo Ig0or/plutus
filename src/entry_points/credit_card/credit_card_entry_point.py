@@ -14,7 +14,9 @@ from src.domain.exceptions.exceptions import (
     CreditCardNotExists,
     InvalidToken,
 )
-from src.services.token_validation.token_validation_token import TokenValidationService
+from src.services.token_validation.token_validation_service import (
+    TokenValidationService,
+)
 
 
 class CreditCardEntryPoint:
