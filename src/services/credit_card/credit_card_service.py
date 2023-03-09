@@ -2,6 +2,7 @@
 from typing import NoReturn
 
 # Local
+from src.core.services.credit_card.i_credit_card_service import ICreditCardService
 from src.domain.dtos.credit_card.credit_card_dto import CreditCardDto
 from src.domain.dtos.credit_card.resumed_credit_card_dto import ResumedCreditCardDto
 from src.domain.exceptions.exceptions import (
@@ -15,7 +16,7 @@ from src.repositories.credit_card.credit_card_repository import CreditCardReposi
 from src.services.obfuscate_data.obfuscate_data_service import ObfuscateDataService
 
 
-class CreditCardService:
+class CreditCardService(ICreditCardService):
     @staticmethod
     def __decrypt_credit_cards_number(
         credit_cards: list[CreditCardModel],

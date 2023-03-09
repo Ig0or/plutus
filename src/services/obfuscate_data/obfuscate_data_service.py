@@ -2,8 +2,13 @@
 from cryptography.fernet import Fernet
 from decouple import config
 
+# Local
+from src.core.services.obfuscate_data.i_obfuscate_data_service import (
+    IObfuscateDataService,
+)
 
-class ObfuscateDataService:
+
+class ObfuscateDataService(IObfuscateDataService):
     __fernet_key = config("FERNET_KEY")
     __fernet_instance = Fernet(key=__fernet_key)
 

@@ -1,8 +1,13 @@
 # Third Party
 from decouple import config
 
+# Local
+from src.core.services.token_validation.token_validation_token import (
+    ITokenValidationService,
+)
 
-class TokenValidationService:
+
+class TokenValidationService(ITokenValidationService):
     __valid_token = config("VALID_TOKEN")
 
     @classmethod
