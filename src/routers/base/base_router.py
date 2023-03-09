@@ -9,7 +9,7 @@ from src.routers.credit_card.credit_card_router import CreditCardRouter
 
 
 class BaseRouter:
-    __app = FastAPI()
+    __app = FastAPI(title="Plutos")
 
     @classmethod
     def __register_credit_card_routers(cls) -> NoReturn:
