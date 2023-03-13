@@ -19,6 +19,8 @@ Microsserviço em Python utilizando FastAPI para o desafio "MaisTodos Backend"
 
 :small_blue_diamond: Pip chill: Alternativa ao pip-freeze, agrupando somente top-level.
 
+:small_blue_diamond: Pydantic: Validação dos dados de entrada.
+
 :small_blue_diamond: Pyfiglet: Prints mais bonitinhos :P
 
 :small_blue_diamond: Pymongo: Conexão com banco de dados MongoDB.
