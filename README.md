@@ -52,12 +52,18 @@ Microsserviço em Python utilizando FastAPI para o desafio "MaisTodos Backend"
 
 <hr>
 
-### PARA EXECUTAR O SERVIDOR :calling:
+### PARA EXECUTAR O SERVIDOR VIA DOCKER COMPOSE :floppy_disk:
+- Com o Docker e Docker Compose instalados na sua maquina rode o comando ```docker-compose up -d``` ou ```docker compose up -d``` na pasta raiz do projeto.
+- Ao executar com o Docker, será criado uma imagem para o MongoDB e para o Plutus.
+- Acesse ```localhost:8080/docs```
+
+### PARA EXECUTAR O SERVIDOR SEM O DOCKER :calling:
 - Crie um novo ambiente virtual com ```python3 -m virtualenv .venv``` ou ```python3 -m venv .venv```
 - Ative o seu novo ambiente virtual com ```source ./venv/bin/activate``` ou ```.venv\Scripts\activate.bat```
 - Instale as dependências do projeto com ```pip install -r requirements.txt``` ou ```pip install -r requirements-dev.txt``` caso for executar os testes
 
 - Crie um arquivo ```.env``` na raiz do projeto de acordo com o ```.env_exemple```
+
 ```
 -- SERVER --
 SERVER_PORT= Porta em que o servidor ficará de pé.
@@ -75,6 +81,7 @@ FERNET_KEY= Chave que será utilizada para criptografar/descriptografar os dados
 ```
 
 - Execute o comando ```python3 plutus.py``` para startar o servidor.
+- Acesse ```localhost:8080/docs```
 
 ### PARA EXECUTAR OS TESTES :bomb:
 - Somente testes unitários: ```pytest```
