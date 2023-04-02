@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: "mongo:latest"
+    container_name: "mongodb"
+    restart: on-failure
+    networks:
+      - backend
+
+  plutus:
+    build:
+      context: .
+    container_name: "plutus"
+    ports:
+      - "8080:8080"
+    depends_on:
+      mongodb:
+        condition: service_started
+    environment:
+      - SERVER_PORT=8080
+      - MONGO_HOST=mongodb
+      - MONGO_DATABASE=mais_todos
+      - MONGO_COLLECTION=credit_cards
+      - VALID_TOKEN=xx
+      - FERNET_KEY=XWkfbw7d6vc7i9zoYrTU4AYhvLk2gDCyv94Sd7fyOBg=
+    networks:
+      - backend
+
+networks:
+  backend:
+
+
