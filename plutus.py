@@ -30,4 +30,4 @@ if __name__ == "__main__":
     port = int(config("SERVER_PORT"))
 
     print_figlet(text="Plutus", colors="76;0;153")
-    uvicorn.run(app=app, port=port)
+    uvicorn.run(app=app, port=port, host="0.0.0.0")
