@@ -13,7 +13,7 @@ from src.entry_points.credit_card.credit_card_entry_point import CreditCardEntry
 
 
 class CreditCardRouter:
-    __credit_card_router = APIRouter(tags=["CreditCard"])
+    __credit_card_router = APIRouter(prefix="/api/v1", tags=["CreditCard"])
 
     @classmethod
     def get_routers(cls) -> APIRouter:
@@ -21,7 +21,7 @@ class CreditCardRouter:
 
     @staticmethod
     @__credit_card_router.get(
-        "/api/v1/credit-card", response_model=ResumedCreditCardResponseDto
+        "/credit-card", response_model=ResumedCreditCardResponseDto
     )
     async def list_credit_cards(
         x_token: str = Header(default=None, convert_underscores=True)
@@ -34,7 +34,7 @@ class CreditCardRouter:
 
     @staticmethod
     @__credit_card_router.get(
-        "/api/v1/credit-card/{credit_card_number}",
+        "/credit-card/{credit_card_number}",
         response_model=CreditCardResponseDto,
     )
     async def detail_credit_card(
@@ -50,9 +50,7 @@ class CreditCardRouter:
         return response
 
     @staticmethod
-    @__credit_card_router.post(
-        "/api/v1/credit-card", response_model=AbstractResponseDto
-    )
+    @__credit_card_router.post("/credit-card", response_model=AbstractResponseDto)
     async def create_credit_card(
         credit_card: CreditCardValidator,
         x_token: str = Header(default=None, convert_underscores=True),
